@@ -27,6 +27,9 @@
   font-size: 16px;
   text-decoration: none;
 }
+.header .nav .active{
+  text-decoration: underline;
+}
 
 .login {
   color: white;
