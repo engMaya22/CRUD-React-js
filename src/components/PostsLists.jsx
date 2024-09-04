@@ -1,7 +1,10 @@
 import React from 'react'
-import { Button, ButtonGroup, Table } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
+import PostListItem from './PostListItem'
 
-export default function PostsLists() {
+export default function PostsLists({posts }) {
+  
+  
   return (
            <Table striped bordered hover>
             <thead>
@@ -12,16 +15,9 @@ export default function PostsLists() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>#1</td>
-                <td>this is title 1</td>
-                <td>
-                  <ButtonGroup aria-label="Basic example">
-                    <Button variant="success">Edit</Button>
-                    <Button variant="danger">Delete</Button>
-                  </ButtonGroup>
-                </td>
-              </tr>
+                
+              <PostListItem posts={posts} />
+       
             </tbody>
           </Table>
       
