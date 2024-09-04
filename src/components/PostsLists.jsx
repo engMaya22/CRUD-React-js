@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Table } from 'react-bootstrap'
 import PostListItem from './PostListItem'
 
-export default function PostsLists({posts }) {
+  const  PostsLists=({posts  ,deletePost }) =>{
   
   
   return (
@@ -16,7 +16,7 @@ export default function PostsLists({posts }) {
             </thead>
             <tbody>
                 
-              <PostListItem posts={posts} />
+              <PostListItem posts={posts} deletePost={deletePost} />
        
             </tbody>
           </Table>
@@ -24,3 +24,4 @@ export default function PostsLists({posts }) {
    
   )
 }
+export default memo(PostsLists);
