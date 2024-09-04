@@ -6,13 +6,13 @@ import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './pages/RootLayout';
-import Add from './pages/Add';
 import Edit from './pages/Edit';
 import ErrorPage from './pages/ErrorPage';
 import Detail from './pages/Detail';
 import Index from './pages/Index';
 import { Provider } from 'react-redux';
 import { store } from './state';
+import AddPost from './pages/AddPost';
 
 
 const router = createBrowserRouter([
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path:"/post/add",
-        element: <Add />
+        element: <AddPost />
       },
       {
         path:":/post/id/edit",
