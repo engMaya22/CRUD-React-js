@@ -17,14 +17,16 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async(args , thun
 
 });
 
-//add posts
-export const insertPost = createAsyncThunk('posts/insertPost', async(dataBook , thunkAPI)=>{
-    const {rejectWithValue} = thunkAPI;
+//add post
+export const insertPost = createAsyncThunk('posts/insertPost', async(dataPost , thunkAPI)=>{
+    const {rejectWithValue , getState} = thunkAPI;
+    const {auth} = getState();
+    dataPost.userId = auth.id;
    try{
         const requestData = {
             method: "POST",
             headers: { 'Content-Type': 'application/json; charset=UTF-8' },
-            body : JSON.stringify(dataBook)
+            body : JSON.stringify(dataPost)
 
         }
        const res = await fetch('http://localhost:5000/posts',requestData);
@@ -41,7 +43,7 @@ export const insertPost = createAsyncThunk('posts/insertPost', async(dataBook , 
 
 //delete post
 export const deletePost = createAsyncThunk('posts/deletePost', async(id , thunkAPI)=>{
-    const {rejectWithValue} = thunkAPI;
+    const {rejectWithValue } = thunkAPI;
      try{
         await fetch(`http://localhost:5000/posts/${id}`,{
             method:"DELETE",

@@ -2,8 +2,11 @@ import React, { useRef, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useDispatch } from 'react-redux';
 import { insertPost } from '../state/postSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddPost() {
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   // way1
   // const title = useRef(null);
@@ -28,7 +31,15 @@ export default function AddPost() {
 
   //way2
   const id = Math.floor(Math.random()*500);
-  dispatch(insertPost({id , title,description}));
+  dispatch(insertPost({id , title,description}))          
+            .unwrap()
+            .then((originalPromiseResult) => {
+              navigate("/")  
+              })
+            .catch((rejectedValueOrSerializedError) => {
+              // handle error here
+            });
+
   setTitle("");
   setDescription("");
      
