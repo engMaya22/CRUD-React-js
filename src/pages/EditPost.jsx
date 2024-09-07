@@ -7,7 +7,7 @@ import { editPost } from "../state/postSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function EditPost() {
-  const {dataLoading, dataError , record} = usePostDetails();
+  const {loading, error , record} = usePostDetails();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [title , setTitle] = useState("");
@@ -34,7 +34,6 @@ export default function EditPost() {
   }
 
   return (
-   <Loading isLoading={dataLoading} error={dataError}>
         <Form onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Title</Form.Label>
@@ -49,11 +48,10 @@ export default function EditPost() {
 
             />
           </Form.Group>
-            {/* <Loading isLoading={loading} error={error} > */}
-            <Button variant="primary" type='submit'  >Submit</Button>
-          {/* </Loading> */}
+            <Loading isLoading={loading} error={error} >
+              <Button variant="primary" type='submit'  >Submit</Button>
+          </Loading>
 
         </Form>
-   </Loading>
   )
 }
