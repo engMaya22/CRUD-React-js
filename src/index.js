@@ -6,15 +6,23 @@ import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './pages/RootLayout';
-import Edit from './pages/Edit';
 import ErrorPage from './pages/ErrorPage';
 import Detail from './pages/Detail';
 import Index from './pages/Index';
 import { Provider } from 'react-redux';
 import { store } from './state';
 import AddPost from './pages/AddPost';
+import EditPost from './pages/EditPost';
 
+const postParamsHandler = ({params})=>{
+  if(isNaN(params.id))//not a number
+  {
+    throw new Response("Bad Request", {statusText : 'please make sure to use correct post id' , status: 400 });
 
+  }
+  return ''
+
+}
 const router = createBrowserRouter([
   {
     path:"/",
@@ -34,22 +42,16 @@ const router = createBrowserRouter([
         element: <AddPost />
       },
       {
-        path:":/post/id/edit",
-        element: <Edit />
+        path:"/post/:id/edit",
+        element: <EditPost />,
+        loader:postParamsHandler
+        
       },
       {
         path:"post/:id",
         element: <Detail />,
-        loader: ({params})=>{
-          // console.log(isNaN(params.id));
-            if(isNaN(params.id))//not a number
-            {
-              //it will display message in status text in error page element 
-              throw new Response("Bad Request", {statusText : 'please make sure to use correct post id' , status: 400 });
+        loader:postParamsHandler
 
-            }
-            return ''
-        }
       }
 
     ]
