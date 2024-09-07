@@ -2,11 +2,17 @@ import { Button, Form } from "react-bootstrap";
 import Loading from "../components/Loading";
 import usePostDetails from "../hooks/use-post-details";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { editPost } from "../state/postSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function EditPost() {
   const {dataLoading, dataError , record} = usePostDetails();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [title , setTitle] = useState("");
   const [description , setDescription] = useState("");
+
 
   useEffect(()=>{//need to to fill my records by record data returned from getpost api when this component render
     if(record && !title && !description){//all data loaded 
@@ -18,6 +24,11 @@ export default function EditPost() {
   },[record ,title , description])
   const submitHandler=(e)=>{
     e.preventDefault();
+    dispatch(editPost({id:record.id ,title,description}))
+    .unwrap()
+    .then(() => {
+      navigate("/")  
+      });
 
 
   }

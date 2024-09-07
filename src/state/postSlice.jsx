@@ -55,6 +55,27 @@ export const insertPost = createAsyncThunk('posts/insertPost', async(dataPost , 
 
 });
 
+//edit post
+export const editPost = createAsyncThunk('posts/editPost', async(item , thunkAPI)=>{
+    const {rejectWithValue } = thunkAPI;
+   try{
+        const requestData = {
+            method: "PATCH",
+            headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+            body : JSON.stringify(item)
+
+        }
+       const res = await fetch(`http://localhost:5000/posts/${item.id}`,requestData);
+       const data = await res.json();
+       return data;//as payload to add it to state when successfuly add it to server by api
+
+   }catch(error){
+       return rejectWithValue(error.message);
+
+   }
+
+});
+
 //delete post
 export const deletePost = createAsyncThunk('posts/deletePost', async(id , thunkAPI)=>{
     const {rejectWithValue } = thunkAPI;
@@ -124,8 +145,23 @@ const postSlice = createSlice({
             state.loading = false;
             })
 
-        //delete post
+        //edit post
+        .addCase(editPost.pending, (state) => {
+            state.loading = true;
+            state.error = null;//we need to reset it when retry after rejected
+            })
+        .addCase(editPost.fulfilled, (state, action) => {
+            state.loading = false;
+            state.record= action.payload;
+            
+            })
+        .addCase(editPost.rejected, (state, action) => {
+            state.error = action.payload;//now action payload is rejectWithValue for the error message
+            state.loading = false;
+            })
 
+
+        //delete post
         .addCase(deletePost.pending, (state) => {
             state.loading = true;
             state.error = null;//we need to reset it when retry after rejected
