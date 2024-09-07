@@ -76,7 +76,7 @@ export default function AddPost() {
          <Button variant="primary" type='submit'  >Submit</Button>
       </Loading>
 
-  </Form>
+    </Form>
 
   )
 }
