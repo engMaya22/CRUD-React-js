@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { insertPost } from '../state/postSlice';
 import { useNavigate } from 'react-router-dom';
+import Loading from './../components/Loading';
 
 export default function AddPost() {
+  const {loading , error} = useSelector((state) => state.posts);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -65,7 +67,14 @@ export default function AddPost() {
  
          />
       </Form.Group>
-      <Button variant="primary" type='submit' >Submit</Button>
+      {/* way1 */}
+      {/* <Loading isLoading={loading} error={error} />
+         <Button variant="primary" type='submit' disabled={loading} >Submit</Button> */}
+
+{/* way2 */}
+      <Loading isLoading={loading} error={error} >
+         <Button variant="primary" type='submit'  >Submit</Button>
+      </Loading>
 
   </Form>
 
