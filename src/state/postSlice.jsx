@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const initialState = {records:[], loading:false , error:null};
+const initialState = {records:[], loading:false , error:null , record:null};
 //get posts
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async(args , thunkAPI)=>{
      const {rejectWithValue} = thunkAPI;
@@ -14,6 +14,20 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async(args , thun
         //we add error message as value to thunkAPI 
 
     }
+
+});
+//fetch posts
+export const fetchPost = createAsyncThunk('posts/fetchPost', async(id , thunkAPI)=>{
+    const {rejectWithValue} = thunkAPI;
+   try{
+       const res = await fetch(`http://localhost:5000/posts/${id}`);
+       const data = await res.json();
+       return data;
+
+   }catch(error){
+       return rejectWithValue(error.message);
+
+   }
 
 });
 
@@ -78,8 +92,24 @@ const postSlice = createSlice({
         state.error = action.payload;//now action payload is rejectWithValue for the error message
         state.loading = false;
         })
-        //add post
 
+        //get post 
+        .addCase(fetchPost.pending, (state) => {
+            state.loading = true;
+            state.error = null;//we need to reset it when retry after rejected
+            state.record  = null;
+            })
+        .addCase(fetchPost.fulfilled, (state, action) => {
+            state.loading = false;
+            state.record = action.payload;
+            
+            })
+        .addCase(fetchPost.rejected, (state, action) => {
+            state.error = action.payload;
+            state.loading = false;
+            })
+
+        //add post
         .addCase(insertPost.pending, (state) => {
             state.loading = true;
             state.error = null;//we need to reset it when retry after rejected

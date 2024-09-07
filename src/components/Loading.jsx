@@ -2,8 +2,7 @@ import React, { cloneElement } from 'react'
 
 export default function Loading({isLoading , error , children}) {
     // console.log(children.type.render.displayName);
-    const elementType = children.type.render.displayName;
-
+    const elementType = children?.type?.render?.displayName;
     const renderHandler =()=>{
         if(elementType === 'Button'){
             // children is item i want to clone which is button ,
@@ -20,8 +19,7 @@ export default function Loading({isLoading , error , children}) {
                                     <p> <br />{error}</p>
                                   </>
                                 :
-            
-                                (children)
+                                children
                     }
                 </>
             )

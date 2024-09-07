@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, ButtonGroup } from 'react-bootstrap'
+import { Link } from 'react-router-dom';
 
 export default function PostListItem({posts ,deletePost }) {
     const deleteHandler = (item)=>{
@@ -11,7 +12,7 @@ export default function PostListItem({posts ,deletePost }) {
         (
               <tr key={post.id}>
               <td>{++index}</td>
-              <td>{post.title}</td>
+              <td><Link to={`post/${post.id}`}>{post.title}</Link> </td>
               <td>
                 <ButtonGroup aria-label="Basic example">
                   <Button variant="success" >Edit</Button>
