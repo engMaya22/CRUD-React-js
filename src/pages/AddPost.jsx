@@ -5,9 +5,9 @@ import { insertPost } from '../store/postSlice';
 import { useNavigate } from 'react-router-dom';
 import Loading from './../components/Loading';
 
-export default function AddPost() {
+export default function AddPost(props) {
+  console.log(props);
   const {loading , error} = useSelector((state) => state.posts);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // way1

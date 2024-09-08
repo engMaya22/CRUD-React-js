@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import AddPost from './pages/AddPost';
 import EditPost from './pages/EditPost';
+import WithGuard from './components/WithGuard';
 
 const postParamsHandler = ({params})=>{
   if(isNaN(params.id))//not a number
@@ -39,7 +40,10 @@ const router = createBrowserRouter([
       },
       {
         path:"/post/add",
-        element: <AddPost />
+        element: <WithGuard>
+                       <AddPost />
+                </WithGuard>
+              
       },
       {
         path:"/post/:id/edit",
