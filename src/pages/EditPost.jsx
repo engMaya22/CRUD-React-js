@@ -12,16 +12,23 @@ export default function EditPost() {
   const dispatch = useDispatch();
   const [title , setTitle] = useState("");
   const [description , setDescription] = useState("");
-
-
+ console.log(title);
+// record -> old data ,title = "", description = "" -> will useeffect run 
+// record -> null in pending , title + description -> old data which is record data -> will not run use effect
+//record data in fullfilled , title + description -> old data which is record data -> will not run use effect
   useEffect(()=>{//need to to fill my records by record data returned from getpost api when this component render
-    if(record && !title && !description){//all data loaded 
-      //!title && !description to ensure for once set these old data
+    if(record ){//all data loaded 
       setTitle(record.title);
       setDescription(record.description);
 
     }
-  },[record ,title , description])
+  },[record])
+
+  useEffect(()=>{//to reset record when we render this page
+   return ()=>{
+    dispatch({type:"posts/cleanRecord"})
+   }
+  },[dispatch])
   const submitHandler=(e)=>{
     e.preventDefault();
     dispatch(editPost({id:record.id ,title,description}))

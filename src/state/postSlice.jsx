@@ -95,7 +95,11 @@ export const deletePost = createAsyncThunk('posts/deletePost', async(id , thunkA
 const postSlice = createSlice({
     name: 'posts',
     initialState,
-    reducers:{},
+    reducers:{
+        cleanRecord :(state)=>{
+            state.record = null;
+        }
+    },
 
     extraReducers:(builder) =>{
         //here we listen to actions returning from get posts to handles state
@@ -118,7 +122,6 @@ const postSlice = createSlice({
         .addCase(fetchPost.pending, (state) => {
             state.loading = true;
             state.error = null;//we need to reset it when retry after rejected
-            state.record  = null;
             })
         .addCase(fetchPost.fulfilled, (state, action) => {
             state.loading = false;
