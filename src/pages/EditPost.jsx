@@ -3,7 +3,7 @@ import Loading from "../components/Loading";
 import usePostDetails from "../hooks/use-post-details";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { editPost } from "../state/postSlice";
+import { editPost } from "../store/postSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function EditPost() {

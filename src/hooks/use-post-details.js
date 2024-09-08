@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchPost } from '../state/postSlice';
+import { fetchPost } from '../store/postSlice';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
