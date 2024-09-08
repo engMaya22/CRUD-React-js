@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -7,13 +7,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './pages/RootLayout';
 import ErrorPage from './pages/ErrorPage';
-import Detail from './pages/Detail';
 import Index from './pages/Index';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import AddPost from './pages/AddPost';
-import EditPost from './pages/EditPost';
+// import AddPost from './pages/AddPost';
+// import EditPost from './pages/EditPost';
+// import Detail from './pages/Detail';
+
 import WithGuard from './components/WithGuard';
+//for code spilting
+const AddPost = React.lazy(() => import('./pages/AddPost'));
+const EditPost = React.lazy(() => import('./pages/EditPost'));
+const Detail = React.lazy(() => import('./pages/Detail'));
 
 const postParamsHandler = ({params})=>{
   if(isNaN(params.id))//not a number
@@ -42,19 +47,26 @@ const router = createBrowserRouter([
         path:"/post/add",
         element: 
                   // <WithGuard> way1 
-                       <AddPost test="tests"/>
+                  <Suspense fallback="loading please wait">
+                     {/* we can pass component to fallback */}
+                    <AddPost />
+                  </Suspense>
                 // </WithGuard>
               
       },
       {
         path:"/post/:id/edit",
-        element: <EditPost />,
+        element: <Suspense fallback="loading please wait">
+                   <EditPost />
+                  </Suspense>,
         loader:postParamsHandler
         
       },
       {
         path:"post/:id",
-        element: <Detail />,
+        element: <Suspense fallback="loading please wait">
+                   <Detail />
+                  </Suspense>,
         loader:postParamsHandler
 
       }
