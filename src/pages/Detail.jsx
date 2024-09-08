@@ -2,13 +2,14 @@ import React, { useEffect } from 'react'
 import usePostDetails from '../hooks/use-post-details';
 import Loading from '../components/Loading';
 import { useDispatch } from 'react-redux';
+import { cleanRecord } from '../store/postSlice';
 
 export default function Detail() {
   const dispatch = useDispatch();
   const {loading, error , record} = usePostDetails();
   useEffect(()=>{//to reset record when we render this page
     return ()=>{
-     dispatch({type:"posts/cleanRecord"})
+     dispatch(cleanRecord())
     }
    },[dispatch])
   return (

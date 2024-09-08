@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { insertPost } from '../state/postSlice';
+import { insertPost } from '../store/postSlice';
 import { useNavigate } from 'react-router-dom';
 import Loading from './../components/Loading';
 

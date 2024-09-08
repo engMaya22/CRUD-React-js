@@ -3,7 +3,7 @@ import Loading from "../components/Loading";
 import usePostDetails from "../hooks/use-post-details";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { editPost } from "../store/postSlice";
+import { cleanRecord, editPost } from "../store/postSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function EditPost() {
@@ -26,7 +26,7 @@ export default function EditPost() {
 
   useEffect(()=>{//to reset record when we render this page
    return ()=>{
-    dispatch({type:"posts/cleanRecord"})
+    dispatch(cleanRecord())
    }
   },[dispatch])
   const submitHandler=(e)=>{

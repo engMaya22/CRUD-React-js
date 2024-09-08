@@ -10,7 +10,7 @@ import ErrorPage from './pages/ErrorPage';
 import Detail from './pages/Detail';
 import Index from './pages/Index';
 import { Provider } from 'react-redux';
-import { store } from './state';
+import { store } from './store';
 import AddPost from './pages/AddPost';
 import EditPost from './pages/EditPost';
 
