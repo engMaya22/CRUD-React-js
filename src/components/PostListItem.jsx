@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function PostListItem({posts ,deletePost }) {
+export default function PostListItem({posts ,deletePost ,isLoggin}) {
     const navigate = useNavigate();
     const deleteHandler = (item)=>{
         if (window.confirm(`Do you really want to delete ${item.title} post?`)) {
@@ -17,7 +17,7 @@ export default function PostListItem({posts ,deletePost }) {
               <td>
                 <ButtonGroup aria-label="Basic example">
                   <Button variant="success" onClick={()=>navigate(`post/${post.id}/edit`)}>Edit</Button>
-                  <Button variant="danger" onClick={()=>(deleteHandler(post))}>Delete</Button>
+                  <Button variant="danger" onClick={()=>(deleteHandler(post))} disabled={!isLoggin}>Delete</Button>
                 </ButtonGroup>
               </td>
             </tr>

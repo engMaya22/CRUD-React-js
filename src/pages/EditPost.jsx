@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { cleanRecord, editPost } from "../store/postSlice";
 import { useNavigate } from "react-router-dom";
+import withGuard from "../util/withGuard";
 
-export default function EditPost() {
+  const EditPost = () =>{
   const {loading, error , record} = usePostDetails();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -62,3 +63,4 @@ export default function EditPost() {
         </Form>
   )
 }
+export default withGuard(EditPost);

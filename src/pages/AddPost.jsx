@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { insertPost } from '../store/postSlice';
 import { useNavigate } from 'react-router-dom';
 import Loading from './../components/Loading';
+import withGuard from './../util/withGuard';
 
-export default function AddPost(props) {
-  console.log(props);
+  const  AddPost = (props)=>{
+    // console.log(props);
   const {loading , error} = useSelector((state) => state.posts);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -80,3 +81,4 @@ export default function AddPost(props) {
 
   )
 }
+export default withGuard(AddPost) ;//way 2 by hof to protect 

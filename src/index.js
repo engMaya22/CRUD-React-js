@@ -40,9 +40,10 @@ const router = createBrowserRouter([
       },
       {
         path:"/post/add",
-        element: <WithGuard>
-                       <AddPost />
-                </WithGuard>
+        element: 
+                  // <WithGuard> way1 
+                       <AddPost test="tests"/>
+                // </WithGuard>
               
       },
       {

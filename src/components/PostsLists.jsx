@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import { Table } from 'react-bootstrap'
 import PostListItem from './PostListItem'
 
-  const  PostsLists=({posts  ,deletePost }) =>{
+  const  PostsLists=({posts  ,deletePost ,isLoggin }) =>{
   
   
   return (
@@ -16,7 +16,7 @@ import PostListItem from './PostListItem'
             </thead>
             <tbody>
                 
-              <PostListItem posts={posts} deletePost={deletePost} />
+              <PostListItem posts={posts} deletePost={deletePost} isLoggin={isLoggin}/>
        
             </tbody>
           </Table>
