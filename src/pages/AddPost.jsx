@@ -5,6 +5,8 @@ import { insertPost } from '../store/postSlice';
 import { useNavigate } from 'react-router-dom';
 import Loading from './../components/Loading';
 import withGuard from './../util/withGuard';
+import { useFormik } from 'formik';
+import { postSchema } from './../util/validationSchema';
 
   const  AddPost = (props)=>{
     // console.log(props);
@@ -16,11 +18,11 @@ import withGuard from './../util/withGuard';
   // const description = useRef(null);
 
   //way2 
-  const [title , setTitle] = useState("");
-  const [description , setDescription] = useState("");
+  // const [title , setTitle] = useState("");
+  // const [description , setDescription] = useState("");
 
-  const submitHandler=(e)=>{
-   e.preventDefault();
+  // const submitHandler=(e)=>{
+  //  e.preventDefault();
   //  console.log(title.current.value);
   //way1
   // const data = {
@@ -33,40 +35,73 @@ import withGuard from './../util/withGuard';
   // description.current.value = null;
 
   //way2
-  const id = Math.floor(Math.random()*500);
-  dispatch(insertPost({id , title,description}))          
-            .unwrap()
-            .then((originalPromiseResult) => {
-              navigate("/")  
-              })
-            .catch((rejectedValueOrSerializedError) => {
-              // handle error here
-            });
+  // const id = Math.floor(Math.random()*500);
+  // dispatch(insertPost({id , title,description}))          
+  //           .unwrap()
+  //           .then((originalPromiseResult) => {
+  //             navigate("/")  
+  //             })
+  //           .catch((rejectedValueOrSerializedError) => {
+  //             // handle error here
+  //           });
 
-  setTitle("");
-  setDescription("");
+  // setTitle("");
+  // setDescription("");
      
  
 
-  }
+  // }
+  const formik = useFormik({
+    initialValues: {
+      title: '',
+      description: '',
+    },
+    validationSchema:postSchema,
+    onSubmit: values => {
+      const id = Math.floor(Math.random()*500);
+      dispatch(insertPost({id , title:values.title,description:values.description}))          
+                .unwrap()
+                .then((originalPromiseResult) => {
+                  navigate("/")  
+                  })
+                .catch((rejectedValueOrSerializedError) => {
+                  // handle error here
+                });
+    
+     
+    },
+  });
  
   return (
-    <Form onSubmit={submitHandler}>
+    <Form onSubmit={formik.handleSubmit} noValidate >
 
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
         <Form.Label>Title</Form.Label>
         <Form.Control type="text"
-        //  ref={title}
-        value={title}  onChange={(e)=>setTitle(e.target.value)}
-          />
+          name ="title"
+          onChange={formik.handleChange}
+          value={formik.values.title}
+          isInvalid={!!formik.errors.title}    
+        />
+            {/* {formik.errors.title && formik.touched.title ? (
+             <div>{formik.errors.title}</div>
+           ) : null} */}
+             <Form.Control.Feedback type="invalid">
+                  {formik.errors.title}
+             </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
         <Form.Label>Description</Form.Label>
         <Form.Control as="textarea" rows={3}
-        //  ref={description}
-         value={description} onChange={(e)=>setDescription(e.target.value)}
- 
+         name ="description"
+         onChange={formik.handleChange}
+         value={formik.values.description}
+         isInvalid={!!formik.errors.description}          
+
          />
+          <Form.Control.Feedback type="invalid">
+                  {formik.errors.description}
+          </Form.Control.Feedback>
       </Form.Group>
       {/* way1 */}
       {/* <Loading isLoading={loading} error={error} />
